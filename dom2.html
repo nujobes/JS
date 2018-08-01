@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    window.onload = function() {
+        // h1태그와 text node를 생성
+        var h1 = document.createElement('h1');
+        var txtNote = document.createTextNode('hello');
+
+        h1.appendChild(txtNote); // h1태그에 text node를 추가
+        document.body.appendChild(h1); // h1태그를 body태그에 추가
+
+        // document.body.innerHTML = '<h1>hello</h1>';
+    }
+    </script>
+    
+</body>
+</html>

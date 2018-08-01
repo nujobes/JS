@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>비 아 엔지 오</title>
+    <!-- http://www.creativecolorschemes.com/resources/free-color-schemes/cool-color-scheme.shtml -->
+    <style>
+        table,
+        tr,
+        td {
+            border: 1px solid #00add2;
+            text-align: center;
+            background-color: rgb(255, 255, 255);
+            /* border-collapse: collapse; */
+        }
+
+        td {
+            width: 80px;
+            height: 80px;
+        }
+
+        td:hover {
+            background-color: #73cbfd;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 onclick="this.innerHTML='Oooops!'">빙고</h1>
+    <script>
+        var BINGO_SIZE = 5;
+        // 일단 선택지 저장
+        var arr = [
+            "참새", "두루미", "황새", "비둘기", "까오기",
+            "오리", "타조", "부엉이", "올뺌", "뱁새",
+            "꿩", "닭", "구환조", "잉꼬", "매",
+            "거위", "독수리", "콘돌", "봉황", "공작",
+            "까치", "까마귀", "앵무새", "꾀꼬리", "고니"
+        ];
+
+        // 셔플
+        arr.sort(function (a, b) {
+            return Math.random() - 0.5;
+        });
+
+        // 이중배열 만들어줌
+        var arr2d = [];
+        for (i = 0; i < 5; i++) {
+            arr2d[i] = new Array(5);
+        }
+
+        // arr2d에 값 넣어주며, 텍스트로 출력하기
+        // for (i = 0; i < BINGO_SIZE; i++) {
+        //     for (j = 0; j < BINGO_SIZE; j++) {
+        //          arr2d[i][j] = arr[i * 5 + j];
+        //         document.write(arr2d[i][j]+"\t");
+        //     }
+        //     document.write("<br>");
+        // }
+
+        // arr2d에 값 넣어주며, 테이블로 출력하기
+        document.write("<table>");
+        for (i = 0; i < BINGO_SIZE; i++) {
+            document.write("<tr>");
+            for (j = 0; j < BINGO_SIZE; j++) {
+                arr2d[i][j] = arr[i * 5 + j];
+                // document.write("<td>" + arr2d[i][j] + "</td>"); // 기존 td출력
+                // document.write("<td onclick=\"this.style.backgroundColor=\'black\'\">" + arr2d[i][j] + "</td>"); // 클릭시 td출력
+                document.write("<td onclick=\"if (this.style.backgroundColor==\'rgb(0, 173, 206)\'){this.style.backgroundColor=\'rgb(255, 255, 255)\'} else {this.style.backgroundColor=\'rgb(0, 173, 206)\'}\">" +
+                    arr2d[i][j] + " </td>");
+                // 클릭시, 재클릭시 td출력,
+            }
+            document.write("</tr>");
+        }
+        document.write("</table>");
+    </script>
+    <!-- https://www.tek-tips.com/viewthread.cfm?qid=983313 -->
+    <table>
+        <tr>
+            <!-- <td onclick="this.getComputedStyle"></td>
+            <td onclick="this.style.backgroundColor='black'"></td>
+            <td onClick="if (this.bgColor=='#FFFFFF'){this.bgColor='#DDDDDD'} else {this.bgColor='#FFFFFF'}"></td> -->
+            <!-- <td onClick="if (this.style.backgroundColor=='rgb(18, 18, 18)'){this.style.backgroundColor='#123456'} else {this.style.backgroundColor='#121212'}">ㅇㅇ</td> -->
+            <td onClick="if (this.style.backgroundColor=='rgb(0, 173, 206)'){this.style.backgroundColor='rgb(255, 255, 255)'} else {this.style.backgroundColor='rgb(0, 173, 206'}">ㅇㅇ</td>
+            <!-- <td onClick="if (this.getComputedStyle.backgroundColor=='rgb(255, 255, 255)'){this.style.backgroundColor='rgb(0, 173, 206)'} else {this.style.backgroundColor='rgb(255, 255, 255)">ㅇㅇ</td> -->
+        </tr>
+    </table>
+</body>
+
+</html>

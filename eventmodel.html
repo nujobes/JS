@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- h1#heaader{click} -->
+    <h1 id="header">click me!</h1>
+    <a href="http://naver.com" onclick="return false;">아흠</a>
+
+    <script>
+        window.onload = function () {
+            var header = document.getElementById('header');
+
+            // onclick 이벤트 설정
+            header.onclick = function () {
+                alert(this.innerHTML);
+            }
+
+            // onclick 이벤트 해제
+            // header.onclick = null;
+
+            // header.onclick = click;
+            // header.onclick = null;
+
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>checkbox-textarea</title>
+</head>
+
+<body>
+    <form>
+        <input type="checkbox" id="cb0" onclick="selectedOutput(id)" value="">전체선택
+        <input type="checkbox" id="cb1" onclick="selectedOutput(id)" value="축구">축구
+        <input type="checkbox" id="cb2" onclick="selectedOutput(id)" value="농구">농구
+        <input type="checkbox" id="cb3" onclick="selectedOutput(id)" value="야구">야구
+        <input type="checkbox" id="cb4" onclick="selectedOutput(id)" value="배구">배구
+        <br>
+        <br>
+        <textarea id="selected_result" value="ㅇㅇ">뇨끼뇨끼</textarea>
+    </form>
+
+    <script>
+        var ta = document.getElementById("selected_result");
+
+        function selectedOutput(id) {
+            var checkBoxId = document.getElementById(id).id;
+            var outputTxt = "";
+
+            if (checkBoxId === "cb0") {
+                if (document.getElementById("cb0").checked == true) {
+                    document.getElementById("cb0").checked = true;
+                    document.getElementById("cb1").checked = true;
+                    document.getElementById("cb2").checked = true;
+                    document.getElementById("cb3").checked = true;
+                    document.getElementById("cb4").checked = true;
+                } else {
+                    document.getElementById("cb0").checked = false;
+                    document.getElementById("cb1").checked = false;
+                    document.getElementById("cb2").checked = false;
+                    document.getElementById("cb3").checked = false;
+                    document.getElementById("cb4").checked = false;
+                }
+            }
+            if (document.getElementById("cb1").checked == true) {
+                if (outputTxt !== "") {
+                    outputTxt = outputTxt + ", " + document.getElementById("cb1").value;
+                } else {
+                    outputTxt = document.getElementById("cb1").value;
+                }
+            }
+            if (document.getElementById("cb2").checked == true) {
+                if (outputTxt !== "") {
+                    outputTxt = outputTxt + ", " + document.getElementById("cb2").value;
+                } else {
+                    outputTxt = document.getElementById("cb2").value;
+                }
+            }
+            if (document.getElementById("cb3").checked == true) {
+                if (outputTxt !== "") {
+                    outputTxt = outputTxt + ", " + document.getElementById("cb3").value;
+                } else {
+                    outputTxt = document.getElementById("cb3").value;
+                }
+            }
+            if (document.getElementById("cb4").checked == true) {
+                if (outputTxt !== "") {
+                    outputTxt = outputTxt + ", " + document.getElementById("cb4").value;
+                } else {
+                    outputTxt = document.getElementById("cb4").value;
+                }
+            }
+
+            ta.value = outputTxt;
+        }
+    </script>
+</body>
+
+</html>

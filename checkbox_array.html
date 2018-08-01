@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>checkbox-textarea</title>
+</head>
+
+<body>
+    <form>
+        <input type="checkbox" onclick="checkAll()" value="">전체선택
+        <input type="checkbox" onclick="chk_output()" value="축구">축구
+        <input type="checkbox" onclick="chk_output()" value="농구">농구
+        <input type="checkbox" onclick="chk_output()" value="야구">야구
+        <input type="checkbox" onclick="chk_output()" value="배구">배구
+        <br>
+        <br>
+        <textarea id="selected_result" value="ㅇㅇ">none</textarea>
+    </form>
+
+    <script>
+        // 7.1
+        var ta = document.getElementById("selected_result");
+        var sports = document.querySelectorAll("input");
+
+        function checkAll() {
+
+            if (sports[0].checked == false) {
+                for (i = 0; i < sports.length; i++) {
+                    sports[i].checked = false;
+                }
+            } else {
+                for (i = 0; i < sports.length; i++) {
+                    sports[i].checked = true;
+                }
+            }
+            chk_output();
+        }
+
+        function chk_output() {
+            var outputTxt = "";
+            for (i = 0; i < sports.length; i++) {
+                if (sports[i].checked == true) {
+                    if (outputTxt == "") {
+                        outputTxt = sports[i].value;
+                    } else {
+                        outputTxt = outputTxt + ", " + sports[i].value;
+                    }
+                }
+            }
+            ta.value = outputTxt;
+            // alert(outputTxt);
+        }
+    </script>
+</body>
+
+</html>
