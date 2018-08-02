@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+
+            /* http://wallpaperpulse.com/poker-background */
+            background: url("images/") no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        img {
+            width: 100px;
+            /* height: 80px; */
+        }
+
+        #card,
+        #backCard {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+        }
+
+        /* 일단 답확인해야되니깐 빗겨놓음, 직접할땐 지우십시오 */
+
+        #backCard {
+            top: 60px;
+            left: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    클로버(♣) 1, 다이아몬드(◆) 2, 스페이드(♠) 3, 하트(♥) 4
+    <br>
+    <div id="card">
+    </div>
+    <div id="backCard">
+        dd
+    </div>
+    <script>
+        // 시간재기
+        // https://stackoverflow.com/questions/313893/how-to-measure-time-taken-by-a-function-to-execute
+        var t0 = performance.now();
+        // 창크긴데...
+        var win_width = (window.innerWidth || document.body.clientWidth);
+        var win_height = (window.innerHeight || document.body.clientHeight);
+
+        var kind = [1, 2, 3, 4];
+        var number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+        var cards = [];
+        var cards_correct = [];
+
+        window.onload = function () {
+            card_comb();
+            card_shuffle();
+            // firtDrawCard();
+            drawCard();
+            drawBack();
+
+        }
+
+        // 카드파일명 조합
+        function card_comb() {
+            for (i = 1; i <= kind.length; i++) {
+                for (j = 1; j <= number.length; j++) {
+                    // 3.1 배열
+                    // 배열에 요소 추가 삭제 그리고 출력
+                    cards.push(i + "_" + j);
+                }
+            }
+        }
+
+        // 카드파일명 쓰까
+        function card_shuffle() {
+            cards.sort(function (a, b) {
+                return Math.random() - 0.5;
+            });
+        }
+
+
+        // 카드 뿌려줌, (화면, 답판)
+        function drawCard() {
+            var tmp = '';
+
+            for (k = 0; k < cards.length; k++) {
+                // 화면에 뿌리기
+                tmp += "<img src=\"images/" + cards[k] + ".jpg\">&nbsp;";
+                cards_correct[k] = 0;
+                //  cards_value[parseInt(k / 13)][k % 13] = cards[k];
+                if (k % 13 == 12) {
+                    tmp += "<br>";
+                }
+            }
+
+            var divTag = document.getElementById('card');
+            divTag.innerHTML = tmp;
+            // document.write(tmp);
+
+        }
+
+        var pic2 = document.getElementById("2_2");
+        // 카드 그려주는데 뒷장 그려줌
+        function drawBack() {
+            var tmp = '';
+
+            for (k = 0; k < cards.length; k++) {
+                // 화면에 뿌리기
+                tmp += "<img src=\"images/back.jpg\" id=\"" + cards[k] +
+                    "\" name=\"" + k + "\" onclick=\"cardClick(this)\">&nbsp;";
+                // tmp += "<img src=\"images/back.jpg\" id=\"" + cards[k] +
+                //     "\" onclick=\"cardClick(this)\" style=\"visibility: visible;\">&nbsp;";
+
+                if (k % 13 == 12) {
+                    tmp += "<br>";
+                }
+            }
+
+            var divTag = document.getElementById('backCard');
+            divTag.innerHTML = tmp;
+        }
+
+        // var cnt = 0;
+        var old_click_id = null;
+        var current_click_id = null;
+
+        function cardClick(cards) {
+            current_click_id = cards.id;
+            var oldCard = document.getElementById(old_click_id);
+            var currentCard = document.getElementById(current_click_id);
+            currentCard.style.visibility = 'hidden';
+
+            // 처음 누른거
+            if (old_click_id == null) {
+                old_click_id = current_click_id;
+            } else { // 두번째 누른거
+                // 똑같은거 두번 눌렀을때 안눌린척 하는거 처리해야 됨 
+                // 맞으면
+                // "_" 앞부분 비교
+                var kindCompareRs = (parseInt(old_click_id.substring(0, 1)) % 2) == (parseInt(current_click_id.substring(
+                    0, 1)) % 2);
+                // "_" 뒷부분 비교
+                var numCompareRs = (old_click_id.substring(old_click_id.indexOf("_"), old_click_id.length) ==
+                    current_click_id.substring(current_click_id.indexOf("_"),
+                        current_click_id.length));
+                // var numCompareRs = (old_click_id.substring(old_click_id.length, 2) == current_click_id.substring(
+                //     old_click_id.length, 2));
+                if (kindCompareRs == true && numCompareRs == true) {
+
+                    // alert(old_click_id + ", " + current_click_id + ", 맞음");
+                    cards_correct[oldCard.name] = 1;
+                    cards_correct[currentCard.name] = 1;
+                    // 맞았으면 checkAllCards() 호출하여, 다 맞췄는지 확인
+                    checkAllCards();
+                } else { // 틀리면
+                    // alert(old_click_id + ", " + current_click_id + ", 틀림");
+                    // 보여줘야 외우니깐 시간줌 1초
+                    setTimeout(function () {
+                        // alert("Hello " + a)
+                        oldCard.style.visibility = 'visible';
+                        currentCard.style.visibility = 'visible';
+                    }, 1000);
+                }
+                old_click_id = null;
+            }
+        }
+
+        function checkAllCards() {
+            var sum = 0;
+            for (i = 0; i < cards_correct.length; i++) {
+                sum += cards_correct[i];
+            }
+            var t1 = performance.now();
+            // console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+            if (sum == 52) {
+                alert("게임을 종료합니다! 소요시간: " + parseInt((t1 - t0) / 60000) + "분 " + parseInt(parseInt((t1 - t0) % 60000) /
+                    1000) + "초");
+            }
+        }
+    </script>
+</body>
+
+</html>
