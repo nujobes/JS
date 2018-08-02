@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>checkbox-textarea</title>
+</head>
+
+<body>
+    <form actionc="">
+        <input type="checkbox" onclick="clickbox(this)" value="전체선택">전체선택
+        <br>
+        <input type="checkbox" onclick="clickbox(this)" value="축구">축구
+        <br>
+        <input type="checkbox" onclick="clickbox(this)" value="농구">농구
+        <br>
+        <input type="checkbox" onclick="clickbox(this)" value="야구">야구
+        <br>
+        <input type="checkbox" onclick="clickbox(this)" value="배구">배구
+        <br>
+        <textarea id="ta" cols="30" value=""></textarea>
+    </form>
+
+    <script>
+        window.onload = function () {
+
+        }
+
+        function clickbox(cb) {
+            var ta = document.getElementById('ta');
+            var cbArr = document.getElementsByTagName("input");
+
+            if (cb.value == "전체선택") {
+                for (i = 0; i < cbArr.length; i++) {
+                    cbArr[i].checked = cb.checked;
+                }
+
+            } else { // 전체가 아닌 다른 cb일 땐    
+                // 클릭된 박스의 값 (cb.value)을 
+                // -------------------------------- 전체 선택이 아닐때 전체선택 항상 false
+                cbArr[0].checked = false;
+            }
+
+
+            // 클릭된 박스의 값(cb.valuce)을 ta에 저장
+            // ta.value += cb.value + ", ";            
+            makeValue();
+        }
+
+        // 모든 체크박스를 검사해서 체크된 박스의 값을
+        // ta에 저장한다.
+        function makeValue() {
+            var cbArr = document.getElementsByTagName("input");
+            var tmp = "";
+
+            for (i = 1; i < cbArr.length; i++) {
+                if (cbArr[i].checked == true) {
+                    tmp += cbArr[i].value + ", ";
+                }
+            }
+            ta.value = tmp;
+        }
+    </script>
+</body>
+
+</html>

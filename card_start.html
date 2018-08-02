@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        img {
+            width: 100px;
+            /* height: 80px; */
+        }
+    </style>
+</head>
+
+<body>
+    클로버(♣) 1, 다이아몬드(◆) 2, 스페이드(♠) 3, 하트(♥) 4
+    <br>
+    <div id=card>
+    </div>
+    <script>
+        // 창크긴데...
+        var win_width = (window.innerWidth || document.body.clientWidth);
+        var win_height = (window.innerHeight || document.body.clientHeight);
+
+        var kind = [1, 2, 3, 4];
+        var number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+        var cards = [];
+        // var cards_value = [];
+        var cards_correct = [];
+
+        // for (i = 0; i < cards.length; i++) {
+        //     cards_correct[i] = 0;
+        // }
+
+        // for (i = 0; i < kind.length; i++) {
+        //     cards_value[i] = new Array(number.length);
+        // }
+        // for (i = 0; i < kind.length; i++) {
+        //     cards_correct[i] = new Array(number.length);
+        // }
+        // // 값판 초기화
+        // for (i = 0; i < kind.length; i++) {
+        //     for (j = 0; j < number.length; j++) {
+        //         cards_correct[i][j] = 0;
+        //     }
+        // }
+
+        window.onload = function () {
+            card_comb();
+            card_shuffle();
+            firstDrawCard();
+            // drawCard();
+            // drawBack();
+
+        }
+
+        // 카드파일명 조합
+        function card_comb() {
+            for (i = 1; i <= kind.length; i++) {
+                for (j = 1; j <= number.length; j++) {
+                    // 3.1 배열
+                    // 배열에 요소 추가 삭제 그리고 출력
+                    cards.push(i + "_" + j);
+                }
+            }
+        }
+
+        // 카드파일명 쓰까
+        function card_shuffle() {
+            cards.sort(function (a, b) {
+                return Math.random() - 0.5;
+            });
+        }
+
+
+        // 카드 뿌려줌, (화면, 답판)
+        function firstDrawCard() {
+            var tmp = '';
+
+            for (k = 0; k < cards.length; k++) {
+                // 화면에 뿌리기
+                tmp += "<img src=\"images/" + cards[k] + ".jpg\" id=\"" + cards[k] +
+                    "\" onclick=\"cardClick(this)\">&nbsp;";
+                    cards_correct[k] = cards[k];
+                //  cards_value[parseInt(k / 13)][k % 13] = cards[k];
+                if (k % 13 == 12) {
+                    tmp += "<br>";
+                }
+            }
+
+            // for (i = 1; i <= 4; i++) {
+            //     for (j = 1; j <= 13; j++) {
+            //         tmp += "<img src=\"images/" + i + "_" + j + ".jpg\">&nbsp;";
+            //     }
+            //     tmp += "<br>";
+            // }
+
+            var divTag = document.getElementById('card');
+            divTag.innerHTML = tmp;
+            // document.write(tmp);
+
+        }
+
+        // 카드 그려주는데 뒷장 그려줌
+        function drawBack() {
+            // document.write("<img src=\"images/back.jpg\" width=\"" + win_width / 14 + "\">&nbsp;");
+            document.write("<img src=\"images/back.jpg\">&nbsp;");
+        }
+
+        // var cnt = 0;
+        var old_click_id = null;
+        var current_click_id = null;
+
+        function cardClick(cards) {
+            // cnt ++;
+            current_click_id = cards.id;
+            // current_click_id = current_click_id.replace("1_", "a_");
+            // current_click_id = current_click_id.replace("3_", "a_");
+            // current_click_id = current_click_id.replace("2_", "a_");
+            // current_click_id = current_click_id.replace("4_", "a_");
+
+            // 처음 누른거
+            if (old_click_id == null) {
+                old_click_id = current_click_id;
+            } else { // 두번째 누른거
+                // 똑같은거 두번 눌렀을때 안눌린척 하는거 처리해야 됨 
+                // 맞으면
+                if (old_click_id == current_click_id) {
+                    alert(old_click_id + ", " + current_click_id + ", 맞음");
+                } else { // 틀리면
+                    alert(old_click_id + ", " + current_click_id + ", 틀림");
+                }
+                old_click_id = null;
+            }
+        }
+    </script>
+</body>
+
+</html>

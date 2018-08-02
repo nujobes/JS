@@ -32,7 +32,7 @@
     <h1 onclick="this.innerHTML='Oooops!'">빙고</h1>
     <script>
         var BINGO_SIZE = 5;
-        // 선택지 저장
+        // 일단 선택지 저장
         var arr = [
             "참새", "두루미", "황새", "비둘기", "까오기",
             "오리", "타조", "부엉이", "올뺌", "뱁새",
@@ -41,18 +41,18 @@
             "까치", "까마귀", "앵무새", "꾀꼬리", "고니"
         ];
 
-        // 선택지 셔플
+        // 셔플
         arr.sort(function (a, b) {
             return Math.random() - 0.5;
         });
 
-        // 선택지를 뿌려줄 빙고판 - 2중 배열 만들기
+        // 이중배열 만들어줌
         var arr2d = [];
         for (i = 0; i < BINGO_SIZE; i++) {
             arr2d[i] = new Array(5);
         }
 
-        // 빙고판에 값 넣어주며, 테이블로 출력하기
+        // arr2d에 값 넣어주며, 테이블로 출력하기
         document.write("<table>");
         for (i = 0; i < BINGO_SIZE; i++) {
             document.write("<tr>");
@@ -60,7 +60,7 @@
                 arr2d[i][j] = arr[i * BINGO_SIZE + j];
                 // document.write("<td>" + arr2d[i][j] + "</td>"); // 기존 td출력
                 // document.write("<td onclick=\"this.style.backgroundColor=\'black\'\">" + arr2d[i][j] + "</td>"); // 클릭시 td출력
-                document.write("<td onclick=\"chk(this)\">" + arr2d[i][j] + " </td>"); // onclick을 포함한 td출력
+                document.write("<td onclick=\"chk(this)\">" + arr2d[i][j] + " </td>"); // 클릭시, 재클릭시 td출력,
             }
             document.write("</tr>");
         }
@@ -69,42 +69,46 @@
         var bingoTd = document.getElementsByTagName("td");
         // var bingoTd = document.querySelectorAll("td");
 
-        // 페이지 로드와 동시에, 각 td의 id값을 i로 준다
+
         window.onload = function () {
             for (i = 0; i < bingoTd.length; i++) {
-                bingoTd[i].id = i;
+                bingoTd[i].id = i; // 일단 0으로 준다
             }
+            // 이중배열을 만들어서?
         }
-        // 각 칸의 값을 선택시 1, 비선택시 0으로 저장해둘 빙고값 판을 따로 만든다
+
+        // 빙고점수판 일단 값 0 주기
         var bingoValue = [];
         for (i = 0; i < BINGO_SIZE; i++) {
             bingoValue[i] = new Array(5);
         }
-        // 빙고점수판 일단 값 0 주기
         for (i = 0; i < BINGO_SIZE; i++) {
             for (j = 0; j < BINGO_SIZE; j++) {
                 bingoValue[i][j] = 0;
             }
         }
 
-        // td 클릭시 호출할 chk 
         function chk(element) {
-            // 일단 체크하면 색을 바꿈
             changebg(element);
+            // 아 그냥 색으로 할까
+            // alert(parseInt(element.id / 5) + "," + element.id % 5 + "," + element.id);
 
-            // 빙고값판의 점수 수정하기
+            // 선택시 빙고판에 점수 수정하기
             // 이미 선택되어 있을 경우
             if (bingoValue[parseInt(element.id / 5)][element.id % 5] == 1) {
                 bingoValue[parseInt(element.id / 5)][element.id % 5] = 0;
             } else { // 선택되어 있지 않을 경우
                 bingoValue[parseInt(element.id / 5)][element.id % 5] = 1;
             }
-            // 빙고가 있는지 체크
+
             bingoChk();
         }
-        
-        // td 클릭시 색 바꿔주는 함수
+
         function changebg(element) {
+            // onclick="if(this.style.backgroundColor=='rgb(0, 173, 206)'){
+            // this.style.backgroundColor='rgb(255, 255, 255)'} else {this.style.backgroundColor='rgb(0, 173, 206)'}"
+            // cellindex
+            // 
             if (element.style.backgroundColor == 'rgb(0, 173, 206)') {
                 element.style.backgroundColor = 'rgb(255, 255, 255)';
             } else {
@@ -113,15 +117,14 @@
         }
 
         // 이전 빙고 갯수 저장
-        // 빙고개수에 변화가 생길시에만 alert창을 띄우기 위해 이전 빙고 갯수를 저장한다.
-        var old_bingoCnt = 0; 
+        var old_bingoCnt = 0; // 빙고개수에 변화가 생길시에만 alert창을 띄우기 위해 이전 빙고 갯수를 저장한다.
 
         function bingoChk() {
-            var bingoCnt = 0; // 총 빙고수
-            var garoCnt = 0; // 가로 빙고 판단을 위한 변수
-            var seroCnt = 0; // 세로 빙고 판단을 위한 변수
-            var crossCnt1 = 0; // 좌상단-우하단 대각 빙고 판단을 위한 변수
-            var crossCnt2 = 0; // 좌하단-우상단 대각 빙고 판단을 위한 변수
+            var bingoCnt = 0;
+            var garoCnt = 0;
+            var seroCnt = 0;
+            var crossCnt1 = 0;
+            var crossCnt2 = 0;
             for (i = 0; i < 5; i++) {
                 for (j = 0; j < 5; j++) {
                     if (bingoValue[i][j] == 1) {
@@ -137,7 +140,6 @@
                         crossCnt2++;
                     }
                 }
-                // 한 줄 돌았으니 빙고 있는지 확인
                 if (garoCnt == 5) {
                     bingoCnt++;
                 }
@@ -150,11 +152,9 @@
                 if (crossCnt2 == 5) {
                     bingoCnt++;
                 }
-                garoCnt = 0; // 가로 한 줄 빙고 판단이 끝났으면 초기화
-                seroCnt = 0; // 세로 한 줄 빙고 판단이 끝났으면 초기화
-                // 대각 빙고는 빙고판 전체를 돌아야 하므로 초기화 하지 않는다
+                garoCnt = 0;
+                seroCnt = 0;
             }
-            // 이전 빙고 갯수와 비교하여, 다를 경우만 alert창 띄움
             if (old_bingoCnt != bingoCnt) {
                 alert(bingoCnt + "개의 빙고!");
                 old_bingoCnt = bingoCnt;

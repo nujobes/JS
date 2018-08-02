@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        div {
+            border: 0px solid #123456;
+            display: inline-block;
+            text-align: center;
+            /* vertical-align: center; */
+        }
+
+        select {
+            width: 80px;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <select id="leftbox" multiple size="5">
+            <option value="농구">농구</option>
+            <option value="야구">야구</option>
+            <option value="배구">배구</option>
+            <option value="하키">하키</option>
+            <option value="축구">축구</option>
+        </select>
+    </div>
+    <div>
+        <button onclick="clickBtn(this)" value="toRight">&gt;</button>
+        <br>
+        <button onclick="clickBtn(this)" value="toLeft">&lt;</button>
+        <br>
+        <button onclick="clickBtn(this)" value="toRightAll">&gt;&gt;</button>
+        <br>
+        <button onclick="clickBtn(this)" value="toLeftAll">&lt;&lt;</button>
+    </div>
+    <div>
+        <select id="rightbox" multiple size="5">
+        </select>
+    </div>
+
+
+    <script>
+        // 쉬운순서 (1) innerHTML
+        // (2) create -> appendchild
+
+        // 각 multiple select
+        var boxLeft = document.getElementById("leftbox");
+        var boxRight = document.getElementById("rightbox");
+        // var opts = document.getElementsByTagName("option");
+        // var cnt = opts.length; // 전체 option 갯수
+
+        // 버튼을 누르면
+        function clickBtn(btn) {
+            // boxRight.appendChild(opts[0]);
+            // 7.1
+            // https://www.w3schools.com/jsref/met_select_add.asp
+
+            // var option = document.createElement('option');
+            // option = opts[0];
+            // boxRight.appendChild(option);
+            // boxRight.appendChild(opts[0]);
+            if (btn.value == "toRight") {
+                // [>]을 눌렀을 때
+                var j = 0;
+                var cnt = boxLeft.options.length;
+                for (i = 0; i < cnt; i++) {
+                    if (boxLeft.options[j].selected == true) {
+                        // alert(boxLeft.options[j].label);
+                        boxLeft.options[j].selected = false;
+                        // 수정시작
+                        // var option = document.createElement('option');
+                        // option = boxLeft.options[j];
+                        // boxRight.appendChild(option);
+                        // 수정끝 
+                        boxRight.appendChild(boxLeft.options[j]);
+
+                    } else {
+                        j++;
+                    }
+                }
+            } else if (btn.value == "toLeft") {
+                // [<]를 눌렀을 때
+                var j = 0;
+                var cnt = boxRight.options.length;
+                for (i = 0; i < cnt; i++) {
+                    if (boxRight.options[j].selected == true) {
+                        // alert(boxLeft.options[j].label);
+                        boxRight.options[j].selected = false;
+                        // 수정시작
+                        // var option = document.createElement('option');
+                        // option = boxRight.options[j];
+                        // boxLeft.appendChild(option);
+                        // 수정끝 
+                        boxLeft.appendChild(boxRight.options[j]);
+                    } else {
+                        j++;
+                    }
+                }
+            } else if (btn.value == "toRightAll") {
+                // [>>]를 눌렀을 때
+                // var j = 0;
+                var cnt = boxLeft.options.length;
+                for (i = 0; i < cnt; i++) {
+                    // 수정시작
+                    // var option = document.createElement('option');
+                    // option = boxLeft.options[0];
+                    // boxRight.appendChild(option);
+                    // 수정끝
+                    boxRight.appendChild(boxLeft.options[0]);
+                }
+
+                // for (i = 0; i < cnt; i++) {
+                //     var option = document.createElement('option');
+                //     option = opts[0];
+                //     boxRight.appendChild(option);
+                // }
+
+                // for (i = 0; i < cnt; i++) {
+                //     // boxRight.appendChild(opts[i]);
+                //     // boxLeft.options[i]=null;
+                //     var option = document.createElement('option');
+                //     option = opts[0];
+                //     boxRight.appendChild(option);
+                // }
+            } else if (btn.value == "toLeftAll") {
+                var cnt = boxRight.options.length;
+                for (i = 0; i < cnt; i++) {
+                    // 수정시작
+                    // var option = document.createElement('option');
+                    // option = boxRight.options[0];
+                    // boxLeft.appendChild(option);
+                    // 수정끝
+                    boxLeft.appendChild(boxRight.options[0]);
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

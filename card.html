@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            text-align: center;
+            padding: auto auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div>
+
+        <script>
+            var back;
+            var KIND = ["c", "d", "h", "s"]; // 클럽, 다이아, 하트, 스페이드
+            var NUMBER = ["a", "2", "3", "4", "5", "6", "7", "8", "9", "10", "j", "q", "k"];
+
+            var win_width = (window.innerWidth || document.body.clientWidth);
+            var win_height = (window.innerHeight || document.body.clientHeight);
+
+            window.onload = function () {
+                drawCards();
+            }
+
+            function drawCards() {
+                for (i = 0; i < NUMBER.length; i++) {
+                    for (j = 0; j < KIND.length; j++) {
+                        drawBack();
+                    }
+
+                }
+            }
+
+            function drawBack() {
+                document.write("<img src=\"images/back.jpg\" width=\"" + win_width / 14 + "\">&nbsp;");
+            }
+        </script>
+    </div>
+</body>
+
+</html>

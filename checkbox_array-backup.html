@@ -10,14 +10,14 @@
 
 <body>
     <form>
-        <input type="checkbox" onclick="chk(this)" value="">전체선택
-        <input type="checkbox" onclick="chk(this)" value="축구">축구
-        <input type="checkbox" onclick="chk(this)" value="농구">농구
-        <input type="checkbox" onclick="chk(this)" value="야구">야구
-        <input type="checkbox" onclick="chk(this)" value="배구">배구
+        <input type="checkbox" onclick="checkAll()" value="">전체선택
+        <input type="checkbox" onclick="chk_output()" value="축구">축구
+        <input type="checkbox" onclick="chk_output()" value="농구">농구
+        <input type="checkbox" onclick="chk_output()" value="야구">야구
+        <input type="checkbox" onclick="chk_output()" value="배구">배구
         <br>
         <br>
-        <textarea id="selected_result"></textarea>
+        <textarea id="selected_result" value="ㅇㅇ">none</textarea>
     </form>
 
     <script>
@@ -26,19 +26,8 @@
         var sports = document.getElementsByTagName("input");
         // var sports = document.querySelectorAll("input");
 
-        function chk(element) {
-            if (element == sports[0]) {
-                checkAll();
-                check_output();
-            } else {
-                if (sports[0].checked == true) {
-                    sports[0].checked = false;
-                }
-                check_output();
-            }
-        }
-
         function checkAll() {
+
             if (sports[0].checked == false) {
                 for (i = 0; i < sports.length; i++) {
                     sports[i].checked = false;
@@ -48,9 +37,10 @@
                     sports[i].checked = true;
                 }
             }
+            chk_output();
         }
 
-        function check_output() {
+        function chk_output() {
             var outputTxt = "";
             for (i = 0; i < sports.length; i++) {
                 if (sports[i].checked == true) {

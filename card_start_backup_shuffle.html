@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        img {
+            width: 100px;
+            /* height: 80px; */
+        }
+    </style>
+</head>
+
+<body>
+    <div id=card>
+
+    </div>
+    <script>
+        // 창크긴데...
+        var win_width = (window.innerWidth || document.body.clientWidth);
+        var win_height = (window.innerHeight || document.body.clientHeight);
+
+        var kind = [1, 2, 3, 4];
+        var number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+        var cards = [];
+
+        window.onload = function () {
+            card_comb();
+            card_shuffle();
+            drawCard();
+            // drawBack();
+
+        }
+
+        // 카드파일명 조합
+        function card_comb() {
+            for (i = 1; i <= kind.length; i++) {
+                for (j = 1; j <= number.length; j++) {
+                    // 3.1 배열
+                    // 배열에 요소 추가 삭제 그리고 출력
+                    cards.push(i + "_" + j);
+                }
+            }
+        }
+
+        // 카드파일명 쓰까
+        // arr.sort(function (a, b) {
+        //     return Math.random() - 0.5;
+        // });
+
+        function card_shuffle() {
+            cards.sort(function (a, b) {
+                return Math.random() - 0.5;
+            });
+        }
+
+        function drawCard() {
+            var tmp = '';
+
+            for (k = 0; k < cards.length; k++) {
+                tmp += "<img src=\"images/" + cards[k] + ".jpg\">&nbsp;";
+                if (k % 13 == 12) {
+                    tmp += "<br>";
+                }
+            }
+
+
+            // for (i = 1; i <= 4; i++) {
+            //     for (j = 1; j <= 13; j++) {
+            //         tmp += "<img src=\"images/" + i + "_" + j + ".jpg\">&nbsp;";
+            //     }
+            //     tmp += "<br>";
+            // }
+
+            var divTag = document.getElementById('card');
+            divTag.innerHTML = tmp;
+            // document.write(tmp);
+
+        }
+
+        function drawBack() {
+            // document.write("<img src=\"images/back.jpg\" width=\"" + win_width / 14 + "\">&nbsp;");
+            document.write("<img src=\"images/back.jpg\">&nbsp;");
+        }
+    </script>
+</body>
+
+</html>
