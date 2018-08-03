@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>카아-드 게임 v.2</title>
+    <style>
+        img {
+            width: 100px;
+            /* height: 80px; */
+        }
+
+        #card {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    클로버(♣) 1, 다이아몬드(◆) 2, 스페이드(♠) 3, 하트(♥)
+    <br>
+    <!-- 이하 추가 -->
+    <button onclick="hide()">hide/show</button>
+    <button onclick="shuffle()">shuffle</button>
+    <button onclick="blink()">blink</button>
+
+    <!-- <img src="images/back.jpg" id="1_1"> -->
+
+    <div id="card">
+    </div>
+
+    <script>
+        var kind = [1, 2, 3, 4]; // 카드의 종류
+        var number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]; // 카드의 숫자 11-J, 12-Q, 13-K
+
+        window.onload = function () {
+            firstDrawCard();
+        }
+
+        function hide() {
+            var imageArr = document.getElementsByTagName("img");
+            for (i = 0; i < imageArr.length; i++) {
+                imageArr[i].src = "images/back.jpg";
+            }
+        }
+
+        function firstDrawCard() {
+            var tmp = "";
+            for (i = 1; i < kind.length + 1; i++) {
+                for (j = 1; j < number.length + 1; j++) {
+                    var fileName = i + "_" + j;
+                    tmp += "<img src=\"images/" + fileName + ".jpg\" id=\"" + fileName + "\">";
+                }
+            }
+
+            var divTag = document.getElementById('card');
+            divTag.innerHTML = tmp;
+        }
+
+
+
+        var cards = document.getElementsByTagName("img");
+        var cardDeck = [];
+        for(i=0;i<cards.length; i++){
+            cardDeck[i]=cards[i];
+        }
+
+        function shuffle() {
+
+        }
+
+        // function drawCard() {
+        //     for (i = 0; i < cards.length; i++) {
+
+        //     }
+        // }
+
+
+
+
+        // 게임이 종료되었는지 확인
+        function checkAllCards() {
+            var sum = 0;
+            for (i = 0; i < cards_correct.length; i++) {
+                sum += cards_correct[i];
+            }
+
+            // 게임이 종료되었으면, 메세지를 출력하고 소요시간을 출력한다.
+            if (sum == 52) {
+                var t1 = performance.now();
+                alert("게임을 종료합니다! 소요시간: " + parseInt((t1 - t0) / 60000) + "분 " + parseInt(parseInt((t1 - t0) % 60000) /
+                    1000) + "초");
+            }
+        }
+    </script>
+</body>
+
+</html>
